@@ -1,15 +1,17 @@
 # 什么是依赖管理?
 
-Very roughly, dependency management is made up of two pieces. Firstly, Gradle needs to know about the things that your project needs to build or run, in order to find them. We call these incoming files the dependencies of the project. Secondly, Gradle needs to build and upload the things that your project produces. We call these outgoing files the publications of the project. Let's look at these two pieces in more detail:
+粗略的讲, 依赖管理由两部分组成. 首先, Gradle 需要了解你的项目需要构建或运行的东西, 以便找到它们. 我们称这些传入的文件为项目的 *dependencies(依赖项)*. 其次, Gradle 需要构建并上传你的项目产生的东西.  我们称这些传出的项目文件为 *publications(发布项)*. 让我们来看看这两条的详细信息：
 
-Most projects are not completely self-contained. They need files built by other projects in order to be compiled or tested and so on. For example, in order to use Hibernate in my project, I need to include some Hibernate jars in the classpath when I compile my source. To run my tests, I might also need to include some additional jars in the test classpath, such as a particular JDBC driver or the Ehcache jars.
+大多数项目都不是完全独立的. 它们需要其它项目进行编译或测试等等. 举个例子, 为了在项目中使用 Hibernate, 在编译的时候需要在 `classpath` 中添加一些 Hibernate 的 jar 路径. 要运行测试的时候, 需要在 `test classpath` 中包含一些额外的 jar, 比如特定的 JDBC 驱动或者 `Ehcache jars`.
 
-These incoming files form the dependencies of the project. Gradle allows you to tell it what the dependencies of your project are, so that it can take care of finding these dependencies, and making them available in your build. The dependencies might need to be downloaded from a remote Maven or Ivy repository, or located in a local directory, or may need to be built by another project in the same multi-project build. We call this process dependency resolution.
+这些传入的文件构成上述项目的依赖. Gradle 允许你告诉它项目的依赖关系, 以便找到这些依赖关系, 并在你的构建中维护它们. 依赖关系可能需要从远程的 Maven 或者 Ivy 仓库中下载, 也可能是在本地文件系统中, 或者是通过多项目构建另一个构建. 我们称这个过程为 *dependency resolution(依赖解析)*.
 
-Often, the dependencies of a project will themselves have dependencies. For example, Hibernate core requires several other libraries to be present on the classpath with it runs. So, when Gradle runs the tests for your project, it also needs to find these dependencies and make them available. We call these transitive dependencies.
+这一特性与 Ant 相比效率提高了许多. 使用 Ant, 你只有指定 jar 的绝对路径或相对路径才能读取 jar. 使用 Gradle, 你只需要申明依赖的名称, 然后它会通过其它的设置来决定在哪里获取这些依赖关系, 比如从 Maven 库. 你可以为 Ant 添加 Apache Ivy 库或得类似的方法, 但是 Gradle 做的更好.
 
-The main purpose of most projects is to build some files that are to be used outside the project. For example, if your project produces a java library, you need to build a jar, and maybe a source jar and some documentation, and publish them somewhere.
+通常, 一个项目本身会具有依赖性. 举个例子, 运行 Hibernate 的核心需要其他几个类库在 classpath 中. 因此, Gradle 在为你的项目运行测试的时候, 它会找到这些依赖关系, 并使其可用. 我们称之为*transitive dependencies(依赖传递)*.
 
-These outgoing files form the publications of the project. Gradle also takes care of this important work for you. You declare the publications of your project, and Gradle take care of building them and publishing them somewhere. Exactly what "publishing" means depends on what you want to do. You might want to copy the files to a local directory, or upload them to a remote Maven or Ivy repository. Or you might use the files in another project in the same multi-project build. We call this process publication.
+大部分项目的主要目的是要建立一些文件, 在项目之外使用. 比如, 你的项目产生一个 Java 库,你需要构建一个jar, 可能是一个 jar 和一些文档, 并将它们发布在某处.
+
+这些传出的文件构成了项目的发布. Gradle 当然会为你负责这个重要的工作. 你声明项目的发布, Gradle 会构建并发布在某处. 究竟什么是"发布"取决于你想做什么. 可能你希望将文件复制到本地目录, 或者将它们上传到一个远程 Maven 或者 Ivy 库.或者你可以使用这些文件在多项目构建中应用在其它的项目中. 我们称这个过程为 *publication(发布)*
 
 

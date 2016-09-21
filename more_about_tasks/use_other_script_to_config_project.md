@@ -11,7 +11,7 @@
 
     println "configuring $project"
     task hello << {
-         project 'hello form other srcipt'
+        println' 'hello form other srcipt'
     }
 
 **使用 gradle -q hello 输出**
@@ -19,3 +19,4 @@
     > gradle -q hello
     configuring root project 'configureProjectUsingScript'
     hello from other script
+
